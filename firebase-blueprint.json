@@ -1,0 +1,95 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "User unique identifier"
+        },
+        "displayName": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "photoURL": {
+          "type": "string",
+          "maxLength": 1000
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["uid", "email"]
+    },
+    "Analysis": {
+      "title": "Virality Analysis",
+      "description": "Analysis result of short-form video content",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "userId": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 2000
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "virality_score": {
+          "type": "number"
+        },
+        "virality_tier": {
+          "type": "string"
+        },
+        "hook_score": {
+          "type": "number"
+        },
+        "hold_rate": {
+          "type": "number"
+        },
+        "share_velocity": {
+          "type": "number"
+        }
+      },
+      "required": ["id", "userId", "virality_score"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/User"
+      },
+      "description": "User document collection"
+    },
+    "/users/{userId}/analyses/{analysisId}": {
+      "schema": {
+        "$ref": "#/entities/Analysis"
+      },
+      "description": "User's saved video analyses"
+    },
+    "/analyses/{analysisId}": {
+      "schema": {
+        "$ref": "#/entities/Analysis"
+      },
+      "description": "Shared video analyses"
+    }
+  }
+}

@@ -1,0 +1,195 @@
+import { initializeApp } from "firebase/app";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut as firebaseSignOut, User } from "firebase/auth";
+import {
+  getFirestore,
+  doc,
+  getDocFromServer,
+  setDoc,
+  getDocs,
+  collection,
+  query,
+  where,
+  orderBy,
+  deleteDoc,
+  onSnapshot
+} from "firebase/firestore";
+import firebaseConfig from "../../firebase-applet-config.json";
+import { ViralityAnalysis } from "../types";
+
+// Initialize Firebase App
+const app = initializeApp(firebaseConfig);
+
+// CRITICAL: Initialize Firestore with explicit database ID from config
+export const db = getFirestore(app, firebaseConfig.firestoreDatabaseId);
+export const auth = getAuth(app);
+export const googleProvider = new GoogleAuthProvider();
+
+// Operational type enum for error tracking
+export enum OperationType {
+  CREATE = "create",
+  UPDATE = "update",
+  DELETE = "delete",
+  LIST = "list",
+  GET = "get",
+  WRITE = "write",
+}
+
+export interface FirestoreErrorInfo {
+  error: string;
+  operationType: OperationType;
+  path: string | null;
+  authInfo: {
+    userId?: string | null;
+    email?: string | null;
+    emailVerified?: boolean | null;
+    isAnonymous?: boolean | null;
+    tenantId?: string | null;
+    providerInfo?: {
+      providerId?: string | null;
+      email?: string | null;
+    }[];
+  };
+}
+
+export function handleFirestoreError(error: unknown, operationType: OperationType, path: string | null) {
+  const errInfo: FirestoreErrorInfo = {
+    error: error instanceof Error ? error.message : String(error),
+    authInfo: {
+      userId: auth.currentUser?.uid,
+      email: auth.currentUser?.email,
+      emailVerified: auth.currentUser?.emailVerified,
+      isAnonymous: auth.currentUser?.isAnonymous,
+      tenantId: auth.currentUser?.tenantId,
+      providerInfo:
+        auth.currentUser?.providerData?.map((provider) => ({
+          providerId: provider.providerId,
+          email: provider.email,
+        })) || [],
+    },
+    operationType,
+    path,
+  };
+  console.error("Firestore Error Details: ", JSON.stringify(errInfo));
+  throw new Error(JSON.stringify(errInfo));
+}
+
+// Test Firestore connection on boot
+export async function testConnection() {
+  try {
+    await getDocFromServer(doc(db, "test", "connection"));
+  } catch (error) {
+    if (error instanceof Error && error.message.includes("client is offline")) {
+      console.warn("Firebase client appears to be offline or unreachable.");
+    }
+  }
+}
+
+testConnection();
+
+// Auth helper functions
+export async function loginWithGoogle() {
+  try {
+    const result = await signInWithPopup(auth, googleProvider);
+    const user = result.user;
+    if (user) {
+      const userRef = doc(db, "users", user.uid);
+      await setDoc(
+        userRef,
+        {
+          uid: user.uid,
+          displayName: user.displayName || "Creator",
+          email: user.email || "",
+          photoURL: user.photoURL || "",
+          createdAt: new Date().toISOString(),
+        },
+        { merge: true }
+      );
+    }
+    return user;
+  } catch (err: any) {
+    if (
+      err?.code === "auth/cancelled-popup-request" ||
+      err?.code === "auth/popup-closed-by-user" ||
+      err?.code === "auth/popup-blocked"
+    ) {
+      console.warn("Google Sign In popup was closed or cancelled:", err.code);
+      return null;
+    }
+    console.error("Google Sign In Error:", err);
+    throw err;
+  }
+}
+
+export async function logoutUser() {
+  return firebaseSignOut(auth);
+}
+
+// Helper to sanitize analysis object so it stays well under Firestore's 1MB limit
+function sanitizeAnalysisForFirestore(analysis: ViralityAnalysis): Record<string, any> {
+  const sanitized: Record<string, any> = { ...analysis };
+
+  // Strip large data: or blob: video_url strings that take up megabytes
+  if (
+    sanitized.video_url &&
+    (sanitized.video_url.startsWith("data:") || sanitized.video_url.startsWith("blob:"))
+  ) {
+    delete sanitized.video_url;
+  }
+
+  // Strip large base64 imageData strings in keyframes if > 10KB
+  if (Array.isArray(sanitized.keyframes)) {
+    sanitized.keyframes = sanitized.keyframes.map((kf: any) => {
+      const cleanKf = { ...kf };
+      if (cleanKf.imageData && cleanKf.imageData.length > 10000) {
+        delete cleanKf.imageData;
+      }
+      return cleanKf;
+    });
+  }
+
+  return sanitized;
+}
+
+// Firestore analyses operations
+export async function saveAnalysisToFirestore(userId: string, analysis: ViralityAnalysis) {
+  const path = `users/${userId}/analyses/${analysis.id}`;
+  try {
+    const payload = sanitizeAnalysisForFirestore(analysis);
+    payload.userId = userId;
+
+    const docRef = doc(db, "users", userId, "analyses", analysis.id);
+    await setDoc(docRef, payload);
+
+    // Also copy to top-level analyses for sharing
+    const topDocRef = doc(db, "analyses", analysis.id);
+    await setDoc(topDocRef, payload);
+  } catch (err) {
+    handleFirestoreError(err, OperationType.WRITE, path);
+  }
+}
+
+export async function fetchUserAnalyses(userId: string): Promise<ViralityAnalysis[]> {
+  const path = `users/${userId}/analyses`;
+  try {
+    const colRef = collection(db, "users", userId, "analyses");
+    const snapshot = await getDocs(colRef);
+    const results: ViralityAnalysis[] = [];
+    snapshot.forEach((docSnap) => {
+      results.push(docSnap.data() as ViralityAnalysis);
+    });
+    return results;
+  } catch (err) {
+    handleFirestoreError(err, OperationType.LIST, path);
+    return [];
+  }
+}
+
+export async function deleteAnalysisFromFirestore(userId: string, analysisId: string) {
+  const path = `users/${userId}/analyses/${analysisId}`;
+  try {
+    await deleteDoc(doc(db, "users", userId, "analyses", analysisId));
+    await deleteDoc(doc(db, "analyses", analysisId));
+  } catch (err) {
+    handleFirestoreError(err, OperationType.DELETE, path);
+  }
+}

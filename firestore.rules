@@ -1,0 +1,68 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Global default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isValidUser(data) {
+      return data.uid == request.auth.uid
+        && data.email is string
+        && data.email.size() <= 200;
+    }
+
+    function isValidAnalysis(data) {
+      return data.id is string
+        && data.id.size() <= 128
+        && data.userId == request.auth.uid
+        && data.virality_score is number;
+    }
+
+    // Users collection
+    match /users/{userId} {
+      allow get: if isValidId(userId) && isOwner(userId);
+      allow create, update: if isValidId(userId) && isOwner(userId) && isValidUser(incoming());
+      allow delete: if isValidId(userId) && isOwner(userId);
+
+      // User's nested analyses
+      match /analyses/{analysisId} {
+        allow get: if isValidId(userId) && isValidId(analysisId) && isOwner(userId);
+        allow list: if isValidId(userId) && isOwner(userId);
+        allow create, update: if isValidId(userId) && isValidId(analysisId) && isOwner(userId) && isValidAnalysis(incoming());
+        allow delete: if isValidId(userId) && isValidId(analysisId) && isOwner(userId);
+      }
+    }
+
+    // Top-level shared analyses collection
+    match /analyses/{analysisId} {
+      allow get: if isValidId(analysisId) && isSignedIn();
+      allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create, update: if isValidId(analysisId) && isSignedIn() && incoming().userId == request.auth.uid && isValidAnalysis(incoming());
+      allow delete: if isValidId(analysisId) && isSignedIn() && existing().userId == request.auth.uid;
+    }
+  }
+}
