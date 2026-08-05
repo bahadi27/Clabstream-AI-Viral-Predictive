@@ -13,8 +13,29 @@ import {
   deleteDoc,
   onSnapshot
 } from "firebase/firestore";
-import firebaseConfig from "../../firebase-applet-config.json";
 import { ViralityAnalysis } from "../types";
+
+// Safe dynamic resolution of Firebase configuration to support both AI Studio local applet config and GitHub deployment env vars
+let appletConfig: Record<string, any> = {};
+try {
+  const configs = import.meta.glob("../../firebase-applet-config.json", { eager: true });
+  const configKey = Object.keys(configs)[0];
+  if (configKey && configs[configKey]) {
+    appletConfig = (configs[configKey] as any).default || configs[configKey];
+  }
+} catch {
+  // Graceful fallback if firebase-applet-config.json is absent on GitHub
+}
+
+const firebaseConfig = {
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || appletConfig.projectId || "",
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || appletConfig.appId || "",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || appletConfig.apiKey || "",
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || appletConfig.authDomain || "",
+  firestoreDatabaseId: import.meta.env.VITE_FIREBASE_DATABASE_ID || appletConfig.firestoreDatabaseId || "(default)",
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || appletConfig.storageBucket || "",
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || appletConfig.messagingSenderId || "",
+};
 
 // Initialize Firebase App
 const app = initializeApp(firebaseConfig);

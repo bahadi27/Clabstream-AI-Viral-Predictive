@@ -1,17 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import { ViralityAnalysis } from "./types";
 import { SAMPLE_ANALYSES } from "./data/sampleAnalyses";
 import { Navbar } from "./components/Navbar";
-import { HeroSection } from "./components/HeroSection";
-import { UploadZone } from "./components/UploadZone";
-import { AnalysisResults } from "./components/AnalysisResults";
-import { ComparisonView } from "./components/ComparisonView";
-import { RecentAnalyses } from "./components/RecentAnalyses";
-import { DemoPreview } from "./components/DemoPreview";
-import { ReportGlossary } from "./components/ReportGlossary";
 import { DeveloperFooter } from "./components/DeveloperFooter";
 import { useAuth } from "./context/AuthContext";
 import { saveAnalysisToFirestore, fetchUserAnalyses } from "./lib/firebase";
+
+// Code-split heavy dashboard components using React.lazy to optimize initial bundle & load time
+const HeroSection = lazy(() => import("./components/HeroSection").then((m) => ({ default: m.HeroSection })));
+const UploadZone = lazy(() => import("./components/UploadZone").then((m) => ({ default: m.UploadZone })));
+const AnalysisResults = lazy(() => import("./components/AnalysisResults").then((m) => ({ default: m.AnalysisResults })));
+const ComparisonView = lazy(() => import("./components/ComparisonView").then((m) => ({ default: m.ComparisonView })));
+const RecentAnalyses = lazy(() => import("./components/RecentAnalyses").then((m) => ({ default: m.RecentAnalyses })));
+const DemoPreview = lazy(() => import("./components/DemoPreview").then((m) => ({ default: m.DemoPreview })));
+const ReportGlossary = lazy(() => import("./components/ReportGlossary").then((m) => ({ default: m.ReportGlossary })));
+
+const ComponentLoader = () => (
+  <div className="py-20 flex flex-col items-center justify-center space-y-4">
+    <div className="w-8 h-8 border-2 border-[#111111] border-t-transparent rounded-full animate-spin" />
+    <span className="text-xs font-mono font-bold text-[#111111] uppercase tracking-widest animate-pulse">
+      Loading NeuroViral Module...
+    </span>
+  </div>
+);
 
 export default function App() {
   const { user } = useAuth();
@@ -329,58 +340,60 @@ export default function App() {
       />
 
       <main className="flex-1 max-w-[1600px] w-full mx-auto px-6 md:px-12 pt-28 pb-16 space-y-12">
-        {/* View Switching */}
-        {isCompareMode && analysisA && analysisB ? (
-          <ComparisonView
-            analysisA={analysisA}
-            analysisB={analysisB}
-            onClose={() => setIsCompareMode(false)}
-          />
-        ) : activeTab === "overview" ? (
-          <HeroSection
-            onStartUpload={() => setActiveTab("upload")}
-            onSelectPreset={() => setActiveTab("samples")}
-          />
-        ) : activeTab === "upload" ? (
-          <UploadZone
-            onStartAnalysis={handleStartAnalysis}
-            isAnalyzing={isAnalyzing}
-            currentStageText={currentStageText}
-          />
-        ) : activeTab === "samples" ? (
-          <DemoPreview
-            onSelectSample={(sample) => {
-              setActiveAnalysis(sample);
-              setActiveTab("report");
-            }}
-          />
-        ) : activeTab === "glossary" ? (
-          <ReportGlossary />
-        ) : (
-          activeAnalysis && (
-            <AnalysisResults
-              analysis={activeAnalysis}
-              onRunReAnalysisPass={handleRunReAnalysisPass}
-              isReAnalyzing={isReAnalyzing}
+        <Suspense fallback={<ComponentLoader />}>
+          {/* View Switching */}
+          {isCompareMode && analysisA && analysisB ? (
+            <ComparisonView
+              analysisA={analysisA}
+              analysisB={analysisB}
+              onClose={() => setIsCompareMode(false)}
             />
-          )
-        )}
-
-        {/* Recent History Vault Grid */}
-        {!isCompareMode && activeTab !== "glossary" && (
-          <div className="pt-8 border-t border-[#E5E5E5]">
-            <RecentAnalyses
-              history={history}
-              onSelectAnalysis={(item) => {
-                setActiveAnalysis(item);
+          ) : activeTab === "overview" ? (
+            <HeroSection
+              onStartUpload={() => setActiveTab("upload")}
+              onSelectPreset={() => setActiveTab("samples")}
+            />
+          ) : activeTab === "upload" ? (
+            <UploadZone
+              onStartAnalysis={handleStartAnalysis}
+              isAnalyzing={isAnalyzing}
+              currentStageText={currentStageText}
+            />
+          ) : activeTab === "samples" ? (
+            <DemoPreview
+              onSelectSample={(sample) => {
+                setActiveAnalysis(sample);
                 setActiveTab("report");
               }}
-              activeAnalysisId={activeAnalysis?.id}
-              selectedForCompare={selectedForCompare}
-              onToggleCompareSelect={handleToggleCompareSelect}
             />
-          </div>
-        )}
+          ) : activeTab === "glossary" ? (
+            <ReportGlossary />
+          ) : (
+            activeAnalysis && (
+              <AnalysisResults
+                analysis={activeAnalysis}
+                onRunReAnalysisPass={handleRunReAnalysisPass}
+                isReAnalyzing={isReAnalyzing}
+              />
+            )
+          )}
+
+          {/* Recent History Vault Grid */}
+          {!isCompareMode && activeTab !== "glossary" && (
+            <div className="pt-8 border-t border-[#E5E5E5]">
+              <RecentAnalyses
+                history={history}
+                onSelectAnalysis={(item) => {
+                  setActiveAnalysis(item);
+                  setActiveTab("report");
+                }}
+                activeAnalysisId={activeAnalysis?.id}
+                selectedForCompare={selectedForCompare}
+                onToggleCompareSelect={handleToggleCompareSelect}
+              />
+            </div>
+          )}
+        </Suspense>
       </main>
 
       <DeveloperFooter />
