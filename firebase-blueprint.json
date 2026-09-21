@@ -69,7 +69,7 @@
           "type": "number"
         }
       },
-      "required": ["id", "userId", "virality_score"]
+      "required": ["id", "virality_score"]
     }
   },
   "firestore": {
@@ -83,13 +83,13 @@
       "schema": {
         "$ref": "#/entities/Analysis"
       },
-      "description": "User's saved video analyses"
+      "description": "User's private saved video analyses"
     },
     "/analyses/{analysisId}": {
       "schema": {
         "$ref": "#/entities/Analysis"
       },
-      "description": "Shared video analyses"
+      "description": "Open-domain public shared video analyses accessible to any user by report ID"
     }
   }
 }

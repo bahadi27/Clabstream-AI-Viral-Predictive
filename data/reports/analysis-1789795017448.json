@@ -1,0 +1,753 @@
+{
+  "id": "analysis-1789795017448",
+  "created_at": "2026-09-19T05:16:57.448Z",
+  "description": "",
+  "status": "complete",
+  "confidence_interval": {
+    "margin": 2.2,
+    "lower": 80.3,
+    "upper": 84.7,
+    "confidence_level": "95%",
+    "confidence_percentage": 95
+  },
+  "confidence_interval_percentage": 95,
+  "virality_score_range": [
+    80.3,
+    84.7
+  ],
+  "historical_runs": [
+    {
+      "runNumber": 1,
+      "timestamp": "2026-09-19T05:16:57.448Z",
+      "score": 82.5
+    }
+  ],
+  "analysis_pass_count": 1,
+  "keyframes": [],
+  "voiceover_draft": "Stop scrolling! If you do this one thing every morning, your focus doubles.",
+  "has_voiceover_recording": true,
+  "cognitive_load_index": {
+    "index": 42,
+    "status": "Optimal High Retention",
+    "recommendation": "Visual and vocal density are well-calibrated for high information retention."
+  },
+  "dopamine_decay_vectors": [
+    {
+      "second": 0,
+      "dopamineLevel": 93,
+      "attentionHold": 98,
+      "swipeHazardRate": 4
+    },
+    {
+      "second": 2,
+      "dopamineLevel": 89,
+      "attentionHold": 95,
+      "swipeHazardRate": 7
+    },
+    {
+      "second": 4,
+      "dopamineLevel": 86,
+      "attentionHold": 92,
+      "swipeHazardRate": 10
+    },
+    {
+      "second": 6,
+      "dopamineLevel": 81,
+      "attentionHold": 91,
+      "swipeHazardRate": 13
+    },
+    {
+      "second": 8,
+      "dopamineLevel": 81,
+      "attentionHold": 91,
+      "swipeHazardRate": 13
+    },
+    {
+      "second": 10,
+      "dopamineLevel": 86,
+      "attentionHold": 90,
+      "swipeHazardRate": 11
+    },
+    {
+      "second": 12,
+      "dopamineLevel": 86,
+      "attentionHold": 90,
+      "swipeHazardRate": 11
+    },
+    {
+      "second": 14,
+      "dopamineLevel": 81,
+      "attentionHold": 89,
+      "swipeHazardRate": 14
+    },
+    {
+      "second": 16,
+      "dopamineLevel": 95,
+      "attentionHold": 78,
+      "swipeHazardRate": 16
+    },
+    {
+      "second": 18,
+      "dopamineLevel": 91,
+      "attentionHold": 78,
+      "swipeHazardRate": 17
+    },
+    {
+      "second": 20,
+      "dopamineLevel": 85,
+      "attentionHold": 77,
+      "swipeHazardRate": 20
+    },
+    {
+      "second": 22,
+      "dopamineLevel": 83,
+      "attentionHold": 77,
+      "swipeHazardRate": 21
+    },
+    {
+      "second": 24,
+      "dopamineLevel": 85,
+      "attentionHold": 77,
+      "swipeHazardRate": 20
+    },
+    {
+      "second": 26,
+      "dopamineLevel": 91,
+      "attentionHold": 77,
+      "swipeHazardRate": 18
+    },
+    {
+      "second": 28,
+      "dopamineLevel": 95,
+      "attentionHold": 77,
+      "swipeHazardRate": 17
+    },
+    {
+      "second": 30,
+      "dopamineLevel": 93,
+      "attentionHold": 76,
+      "swipeHazardRate": 18
+    },
+    {
+      "second": 32,
+      "dopamineLevel": 87,
+      "attentionHold": 76,
+      "swipeHazardRate": 20
+    },
+    {
+      "second": 34,
+      "dopamineLevel": 83,
+      "attentionHold": 76,
+      "swipeHazardRate": 22
+    },
+    {
+      "second": 36,
+      "dopamineLevel": 84,
+      "attentionHold": 76,
+      "swipeHazardRate": 21
+    },
+    {
+      "second": 38,
+      "dopamineLevel": 90,
+      "attentionHold": 76,
+      "swipeHazardRate": 19
+    },
+    {
+      "second": 40,
+      "dopamineLevel": 94,
+      "attentionHold": 75,
+      "swipeHazardRate": 18
+    },
+    {
+      "second": 42,
+      "dopamineLevel": 94,
+      "attentionHold": 75,
+      "swipeHazardRate": 18
+    },
+    {
+      "second": 44,
+      "dopamineLevel": 89,
+      "attentionHold": 75,
+      "swipeHazardRate": 20
+    },
+    {
+      "second": 46,
+      "dopamineLevel": 84,
+      "attentionHold": 75,
+      "swipeHazardRate": 22
+    },
+    {
+      "second": 48,
+      "dopamineLevel": 83,
+      "attentionHold": 74,
+      "swipeHazardRate": 23
+    },
+    {
+      "second": 50,
+      "dopamineLevel": 88,
+      "attentionHold": 74,
+      "swipeHazardRate": 21
+    },
+    {
+      "second": 52,
+      "dopamineLevel": 93,
+      "attentionHold": 74,
+      "swipeHazardRate": 19
+    },
+    {
+      "second": 54,
+      "dopamineLevel": 94,
+      "attentionHold": 74,
+      "swipeHazardRate": 19
+    },
+    {
+      "second": 56,
+      "dopamineLevel": 90,
+      "attentionHold": 74,
+      "swipeHazardRate": 20
+    },
+    {
+      "second": 58,
+      "dopamineLevel": 85,
+      "attentionHold": 73,
+      "swipeHazardRate": 23
+    },
+    {
+      "second": 60,
+      "dopamineLevel": 83,
+      "attentionHold": 73,
+      "swipeHazardRate": 24
+    }
+  ],
+  "algorithmic_platform_vector": {
+    "tiktok": {
+      "score": 82,
+      "algorithmicTier": "Standard High-Engagement Cluster",
+      "completionThresholdMet": true,
+      "recommendedCutRhythm": "0.85-1.1 cuts/sec"
+    },
+    "instagramReels": {
+      "score": 83,
+      "algorithmicTier": "Follower + Non-Follower Hybrid",
+      "savePropensityRank": "High Bookmark Rate"
+    },
+    "youtubeShorts": {
+      "score": 83,
+      "algorithmicTier": "Standard Seed Batch (1-5k APV)",
+      "vsaRatioPredicted": "82% Viewed vs Swiped"
+    },
+    "linkedinVideo": {
+      "score": 82,
+      "algorithmicTier": "Standard Professional Network",
+      "practicalUtilityRank": "Actionable Professional Asset"
+    }
+  },
+  "engine_telemetry": {
+    "executionLatencyMs": 15865,
+    "modelUsed": "gemini-3.8-flash",
+    "cacheStatus": "miss_computed",
+    "timestamp": "2026-09-19T05:16:57.448Z"
+  },
+  "audio_elements": [
+    "Urgent vocal tone",
+    "Fast-paced delivery",
+    "Motivational background music"
+  ],
+  "audio_engagement": 88,
+  "brain_regions": {
+    "amygdala": 75,
+    "auditory_cortex": 82,
+    "cerebellum": 40,
+    "dmn": 20,
+    "hippocampus": 65,
+    "insula": 70,
+    "left_brain": 78,
+    "limbic": 80,
+    "mirror_neurons": 60,
+    "prefrontal": 92,
+    "reward_circuit": 85,
+    "right_brain": 65,
+    "tpj": 55,
+    "visual_cortex": 80
+  },
+  "clarity_score": 95,
+  "detected_language": "English",
+  "emotion_arousal": 85,
+  "emotional_beats": [
+    "Urgency",
+    "Curiosity",
+    "Anticipation"
+  ],
+  "inferred_title": "Morning Routine Hacks for Focus",
+  "is_non_english": false,
+  "language_code": "en",
+  "language_confidence": 0.99,
+  "language_notes": "Standard US/UK English focus.",
+  "localized_market_fit": "Global English-speaking markets",
+  "narrative_tone": "High-Energy Direct Authority",
+  "novelty_index": 72,
+  "novelty_signals": "Pattern interrupt hook used to bypass algorithmic scroll blindness.",
+  "pacing_notes": "Rapid rhythmic speech paired with high-frequency visual cuts to maintain attention.",
+  "pacing_score": 90,
+  "pattern_interrupts": [
+    "Stop scrolling!",
+    "focus doubles"
+  ],
+  "retention_score": 88,
+  "shot_by_shot": [
+    {
+      "audio_cue": "Stop scrolling!",
+      "on_screen": "Bold text: FOCUS DOUBLE?",
+      "second_range": "0-2",
+      "visual_action": "Close-up of creator looking directly into lens"
+    },
+    {
+      "audio_cue": "If you do this one thing every morning, your focus doubles.",
+      "on_screen": "Animated checklist icon",
+      "second_range": "2-5",
+      "visual_action": "Quick zoom in on creator"
+    }
+  ],
+  "transcript_summary": "A short-form hook promising a morning habit that improves focus efficiency.",
+  "verbatim_transcript": "Stop scrolling! If you do this one thing every morning, your focus doubles.",
+  "visual_density": 75,
+  "visual_elements": [
+    "Direct eye contact",
+    "High contrast text overlay",
+    "Fast zoom"
+  ],
+  "visual_pacing_speed": "Fast",
+  "is_hardselling": false,
+  "is_product_promotion": false,
+  "virality_score": 82.5,
+  "virality_tier": "High",
+  "title": "Morning Routine Hacks for Focus",
+  "product_promotion_audit": {
+    "product_detected": true,
+    "product_name": "Morning Routine Hacks for Focus",
+    "selling_style": "Hard-Selling Direct Pitch",
+    "hard_sell_risk_score": 82,
+    "overall_verdict": "Video contains direct hard-selling promotion markers for \"Morning Routine Hacks for Focus\". To maximize algorithmic reach and conversion on TikTok Shop and Meta Reels, avoid solely presenting product features. Implement the 5 Golden Direct-Response Pillars: problem-led storytelling (PASP), 3-second scene pacing, 0-3s value climax preview, and pristine HD quality without screen-recording artifacts.",
+    "pillars": [
+      {
+        "pillar_id": 1,
+        "title": "1. Introduction Attractiveness & Rhythm Optimization",
+        "status": "needs_improvement",
+        "score": 68,
+        "user_rule": "Improve the introduction of the video to make it more attractive and optimize the rhythm of the content to keep users engaged for longer.",
+        "current_critique": "Opening pace is linear and spends too much initial time setting up the offer before creating an emotional urgency hook around \"Morning Routine Hacks for Focus\".",
+        "actionable_recommendation": "Trim first 1.5 seconds of dead air. Open with an immediate sensory trigger or high-tempo question, then sync the vocal rhythm to a brisk 120-140 words-per-minute tempo.",
+        "concrete_example": "Instead of 'Hey guys, today I want to introduce this Morning Routine Hacks for Focus...', open with: 'If you are still struggling with this daily mistake, watch this before you buy anything else!'"
+      },
+      {
+        "pillar_id": 2,
+        "title": "2. Video Quality Defense & Artifact Prevention",
+        "status": "optimized",
+        "score": 91,
+        "user_rule": "Enhance the video quality to prevent common issues such as screen recording, black screen, screen jitter, low definition, and no audio.",
+        "current_critique": "Video clarity is strong with no critical screen recording watermark, black frame dropouts, or audio phasing detected.",
+        "actionable_recommendation": "Ensure video export is locked at 1080x1920 (9:16 vertical), 30-60 FPS with normalized audio levels (-14 LUFS) to ensure zero algorithmic down-ranking.",
+        "concrete_example": "Clean 1080p native camera capture with high dynamic contrast and Crisp voiceover vocal isolation."
+      },
+      {
+        "pillar_id": 3,
+        "title": "3. Storytelling & Capability Showcasing (Anti-Pure Product Focus)",
+        "status": "critical_issue",
+        "score": 54,
+        "user_rule": "Avoid solely focusing on the product, and instead, tell a story that highlights its key selling points and showcase its capabilities.",
+        "current_critique": "The video overly fixates on static product specs rather than illustrating the emotional transformation or demonstrating real-world practical capabilities.",
+        "actionable_recommendation": "Pivot to a 3-act narrative: Show the real-life frustration first, demonstrate the product in action under stress testing, and reveal the seamless end result.",
+        "concrete_example": "Show someone actively failing with old alternatives for 2 seconds, then introduce \"Morning Routine Hacks for Focus\" as the effortless 1-click rescue solution."
+      },
+      {
+        "pillar_id": 4,
+        "title": "4. 0-3s Value Climax Preview & Intriguing Questions",
+        "status": "needs_improvement",
+        "score": 65,
+        "user_rule": "Preview the value of the content within the first 0-3 seconds or use intriguing questions that lead to the climax to bring more engagement and reduce your swipe rate.",
+        "current_critique": "The primary value proposition is buried past the 5-second mark, causing casual FYP scrollers to swipe away before reaching the core offer.",
+        "actionable_recommendation": "Flash the final 'after' result or dramatic capability test within the first 800 milliseconds, paired with a curiosity-inducing on-screen question.",
+        "concrete_example": "Show the jaw-dropping end result in frame 1 with text: 'Wait, does this actually work?' before demonstrating how it happened."
+      },
+      {
+        "pillar_id": 5,
+        "title": "5. 3-Second Shot Pacing & Dynamic Visual Material",
+        "status": "needs_improvement",
+        "score": 70,
+        "user_rule": "Change the shot every 3 seconds to provide a more dynamic viewing experience, or add new visual materials to convey more information and keep the audience engaged.",
+        "current_critique": "Visual framing remains static on a single camera angle for more than 4.5 consecutive seconds, leading to a dopamine dip on mobile feeds.",
+        "actionable_recommendation": "Enforce a strict 2.5-3.0 second cut cadence: Alternate between wide setup, close-up macro product interaction, kinetic text overlays, and split-screen reaction B-roll.",
+        "concrete_example": "0-2.5s: Extreme close-up in-use demo → 2.5-5.0s: Face-to-camera creator reaction with kinetic bold text super → 5.0-7.5s: Macro durability stress-test."
+      }
+    ],
+    "quality_checks": {
+      "screen_recording_detected": false,
+      "black_screen_or_freeze": false,
+      "screen_jitter_detected": false,
+      "low_definition_detected": false,
+      "audio_missing_or_poor": false,
+      "details": "No severe quality degradation found. Native vertical frame geometry, clear audio balance, and absence of screen capture overlays maintain top algorithmic eligibility."
+    },
+    "pasp_storytelling_plan": {
+      "problem": "Establish the painful daily friction experienced without Morning Routine Hacks for Focus within the first 2 seconds.",
+      "agitate": "Amplify the wasted time, money, or frustration caused by low-quality alternatives in seconds 2-6.",
+      "solution": "Reveal Morning Routine Hacks for Focus actively in motion solving the agitation with high-definition closeups in seconds 6-12.",
+      "proof": "Provide concrete visual proof, before/after contrast, or social proof result that triggers the purchase impulse in seconds 12-18."
+    }
+  },
+  "benchmark_comparison": {
+    "benchmarkId": "benchmark-myth-buster-tech",
+    "benchmarkTitle": "The Anti-Intuitive Myth Buster (18.4M Views)",
+    "provenViews": "18.4M Views",
+    "category": "Education / Tech",
+    "overallDnaMatchScore": 78,
+    "hookSimilarityScore": 74,
+    "pacingAlignmentScore": 82,
+    "retentionStructureMatch": 79,
+    "benchmarkHookTranscript": "Stop doing this in your daily workflow. It's literally destroying your productivity.",
+    "benchmarkPacingCps": 0.92,
+    "dnaGapAnalysis": {
+      "hookGap": "The benchmark locks a negative stakes warning within 0.8s, whereas this video introduces \"Double Your Focus Every Morning\" with conversational phrasing that delays the high-stakes curiosity gap.",
+      "pacingGap": "The benchmark cuts at 0.92 cuts/sec with visual punch-ins on every noun, while this clip has a slightly slower visual transition rhythm.",
+      "audioVisualGap": "The benchmark drops an acoustic sub-bass transient right at second 0:01.2 to punctuate the premise before the demonstration.",
+      "curiosityLoopGap": "The benchmark explicitly promises a 10-second frictionless fix early on, sustaining watch-through until the final payoff."
+    },
+    "transferredBlueprint": {
+      "title": "Transferred Viral Blueprint from The Anti-Intuitive Myth Buster (18.4M Views)",
+      "hookAdaptation": "Stop doing this with Double Your Focus Every Morning. It's literally holding back your results and nobody talks about it.",
+      "pacingActionPlan": "Increase cut rate between 0:00 - 0:04 to 1 cut per second with rapid micro-zooms on key visual assets.",
+      "soundDesignAction": "Insert a subtle bass drop or sound transient at 0:01.2 right as you state the primary insight.",
+      "predictedViralityLift": 18
+    },
+    "exactTimelineTransfers": [
+      {
+        "timestamp": "00:00.8",
+        "benchmarkTactic": "High-contrast before/after visual split or punch-in",
+        "appliedToUserVideo": "Flash a visual transformation or problem proof related to \"Double Your Focus Every Morning\" to lock first 3-second retention.",
+        "predictedRetentionGain": "+22% 3s Hold Rate"
+      },
+      {
+        "timestamp": "00:02.4",
+        "benchmarkTactic": "Open curiosity loop with explicit payoff timeline ('Here is how in 10s')",
+        "appliedToUserVideo": "Add text super stating: 'Here is the 1-step fix in 5 seconds' to prevent mid-roll dropoff.",
+        "predictedRetentionGain": "+15% Completion Rate"
+      },
+      {
+        "timestamp": "00:06.0",
+        "benchmarkTactic": "Rapid visual proof demonstration without filler words",
+        "appliedToUserVideo": "Cut directly to the core result of Double Your Focus Every Morning with upbeat audio crescendo.",
+        "predictedRetentionGain": "+28% Peer Share Velocity"
+      }
+    ]
+  },
+  "narrative_stress_test": {
+    "overallDurabilityScore": 81,
+    "scriptWordCount": 13,
+    "totalIntervals": 3,
+    "dominantDropoffHazard": "Mid-Roll Exposition Gap (t=00:05 - 00:10)",
+    "fatalFlawTimestamp": "00:07.2",
+    "peakResonanceTimestamp": "00:12.4",
+    "executiveStressVerdict": "The narrative establishes strong initial curiosity (+88% 3s hold), but encounters minor pacing friction at 00:07 before the visual proof delivery. Applying the 00:05 script patch lifts completion rate past the 2026 viral threshold (74%+).",
+    "fullPatchedScript": "90% of people do Morning Routine Hacks for Focus completely backwards — here is why line 2 is ruining your results. Look at what happens right here when you do this — watch this exact error. All you change is this one step: do this, and your speed instantly doubles. Try this on your next run and notice how much smoother it feels.",
+    "testedAt": "2026-09-19T05:16:57.449Z",
+    "personaSyntheses": [
+      {
+        "personaId": "fast_scroller",
+        "personaName": "Gen Z Fast-Scroller",
+        "personaRole": "Scroll Reflex: <1.0s",
+        "survivalRate": 84,
+        "dropoffTimestamp": "00:07.5",
+        "primaryDropoffReason": "Explanation pace temporarily slows down without kinetic visual cuts.",
+        "resonanceHighlight": "Immediate 0.8s pattern interrupt and fast 12s payoff loop.",
+        "swipedCountEstimated": "16% Swipe Rate"
+      },
+      {
+        "personaId": "skeptic_expert",
+        "personaName": "Domain Skeptic",
+        "personaRole": "Proof-First Filter",
+        "survivalRate": 89,
+        "dropoffTimestamp": "None (Survives to End)",
+        "primaryDropoffReason": "Wants immediate proof artifact rather than conversational setup.",
+        "resonanceHighlight": "Concrete demonstration and verifiable takeaway.",
+        "swipedCountEstimated": "11% Swipe Rate"
+      },
+      {
+        "personaId": "casual_browser",
+        "personaName": "Casual Viewer",
+        "personaRole": "Entertainment & Vibe",
+        "survivalRate": 86,
+        "dropoffTimestamp": "00:08.0",
+        "primaryDropoffReason": "Technical jargon without visual humor or relatable analogy.",
+        "resonanceHighlight": "Rhythmic background beat and high aesthetic finish.",
+        "swipedCountEstimated": "14% Swipe Rate"
+      },
+      {
+        "personaId": "high_intent_buyer",
+        "personaName": "Action-Taker",
+        "personaRole": "Utility & Takeaway",
+        "survivalRate": 94,
+        "dropoffTimestamp": "None (Survives to End)",
+        "primaryDropoffReason": "Extremely low drop-off; immediate bookmark response.",
+        "resonanceHighlight": "Actionable frictionless tip saves effort instantly.",
+        "swipedCountEstimated": "6% Swipe Rate"
+      },
+      {
+        "personaId": "algorithm_sentinel",
+        "personaName": "2026 Algo Sentinel",
+        "personaRole": "Distribution AI",
+        "survivalRate": 91,
+        "dropoffTimestamp": "None (Survives to End)",
+        "primaryDropoffReason": "Slight dip at t=7s, but 70%+ full completion criteria satisfied.",
+        "resonanceHighlight": "High rewatch and direct share probability (+42 shares/1k views).",
+        "swipedCountEstimated": "9% Drop Rate"
+      }
+    ],
+    "intervals": [
+      {
+        "intervalIndex": 0,
+        "timeRange": "00:00 - 00:05",
+        "startSecond": 0,
+        "endSecond": 5,
+        "scriptSnippet": "Stop scrolling! If you do this one thing",
+        "visualContext": "High-contrast opening frame, quick punch-in zoom on speaker or core object.",
+        "aggregateRetentionScore": 92,
+        "hazardLevel": "low",
+        "frictionPoint": "Risk of sounding like generic advice if stakes aren't clear in first 1.5s.",
+        "keyArousalTrigger": "Negative Pattern Interrupt & Curiosity Gap",
+        "audienceReactions": [
+          {
+            "personaId": "fast_scroller",
+            "personaName": "Gen Z Fast-Scroller",
+            "personaAvatar": "⚡",
+            "personaRole": "Scroll Reflex: <1.0s",
+            "retentionLikelihood": 88,
+            "swipeRisk": "low",
+            "internalMonologue": "Wait, what mistake? Okay you have 3 seconds to show me before I swipe.",
+            "emotionalValence": "intrigued",
+            "verdictTag": "Hook Locked (3s Safe)",
+            "actionTaken": "watch_further"
+          },
+          {
+            "personaId": "skeptic_expert",
+            "personaName": "Domain Skeptic",
+            "personaAvatar": "🧐",
+            "personaRole": "Proof-First Filter",
+            "retentionLikelihood": 82,
+            "swipeRisk": "moderate",
+            "internalMonologue": "Everyone claims this is a mistake. Let's see if you actually have data or just clickbait.",
+            "emotionalValence": "skeptical",
+            "verdictTag": "Awaiting Proof",
+            "actionTaken": "watch_further"
+          },
+          {
+            "personaId": "casual_browser",
+            "personaName": "Casual Viewer",
+            "personaAvatar": "🍿",
+            "personaRole": "Entertainment & Vibe",
+            "retentionLikelihood": 90,
+            "swipeRisk": "low",
+            "internalMonologue": "Nice audio beat and clean visuals. I'll watch for a bit.",
+            "emotionalValence": "entertained",
+            "verdictTag": "Engaged by Pace",
+            "actionTaken": "watch_further"
+          },
+          {
+            "personaId": "high_intent_buyer",
+            "personaName": "Action-Taker",
+            "personaAvatar": "💼",
+            "personaRole": "Utility & Takeaway",
+            "retentionLikelihood": 94,
+            "swipeRisk": "low",
+            "internalMonologue": "If this saves me time or money, I'm saving this video immediately.",
+            "emotionalValence": "intrigued",
+            "verdictTag": "Bookmark Intent High",
+            "actionTaken": "watch_further"
+          },
+          {
+            "personaId": "algorithm_sentinel",
+            "personaName": "2026 Algo Sentinel",
+            "personaAvatar": "🤖",
+            "personaRole": "Distribution AI",
+            "retentionLikelihood": 91,
+            "swipeRisk": "low",
+            "internalMonologue": "88% 3-second hold probability detected. Initial FYP test bucket approved.",
+            "emotionalValence": "hooked",
+            "verdictTag": "FYP Test Batch Passed",
+            "actionTaken": "watch_further"
+          }
+        ],
+        "geminiPatch": {
+          "suggestedScriptRewrite": "90% of people do Morning Routine Hacks for Focus completely backwards — here is why line 2 is ruining your results.",
+          "visualActionPatch": "Punch-in zoom by 1.15x at 00:00.8 with bold kinetic subtitle flash.",
+          "predictedRetentionBoost": "+16% 3s Hold Rate",
+          "rationale": "Replacing vague warning with specific statistic and visual punch-in eliminates passive scrolling."
+        }
+      },
+      {
+        "intervalIndex": 1,
+        "timeRange": "00:05 - 00:10",
+        "startSecond": 5,
+        "endSecond": 10,
+        "scriptSnippet": "every morning, your focus doubles.",
+        "visualContext": "Demonstrating the problem on screen with side-by-side or macro closeup.",
+        "aggregateRetentionScore": 78,
+        "hazardLevel": "moderate",
+        "frictionPoint": "Exposition buildup without visual demonstration can cause attention dip.",
+        "keyArousalTrigger": "Cognitive Dissonance & Problem Agitation",
+        "audienceReactions": [
+          {
+            "personaId": "fast_scroller",
+            "personaName": "Gen Z Fast-Scroller",
+            "personaAvatar": "⚡",
+            "personaRole": "Scroll Reflex: <1.0s",
+            "retentionLikelihood": 68,
+            "swipeRisk": "high",
+            "internalMonologue": "Get to the point! Don't explain why I'm wrong for 5 seconds, show the fix.",
+            "emotionalValence": "bored",
+            "verdictTag": "Pacing Lag Warning",
+            "actionTaken": "hesitating"
+          },
+          {
+            "personaId": "skeptic_expert",
+            "personaName": "Domain Skeptic",
+            "personaAvatar": "🧐",
+            "personaRole": "Proof-First Filter",
+            "retentionLikelihood": 80,
+            "swipeRisk": "moderate",
+            "internalMonologue": "Okay, the explanation makes logical sense so far.",
+            "emotionalValence": "intrigued",
+            "verdictTag": "Logic Aligned",
+            "actionTaken": "watch_further"
+          },
+          {
+            "personaId": "casual_browser",
+            "personaName": "Casual Viewer",
+            "personaAvatar": "🍿",
+            "personaRole": "Entertainment & Vibe",
+            "retentionLikelihood": 75,
+            "swipeRisk": "moderate",
+            "internalMonologue": "Interesting, but hope it doesn't get too technical.",
+            "emotionalValence": "intrigued",
+            "verdictTag": "Mid-Roll Watch",
+            "actionTaken": "watch_further"
+          },
+          {
+            "personaId": "high_intent_buyer",
+            "personaName": "Action-Taker",
+            "personaAvatar": "💼",
+            "personaRole": "Utility & Takeaway",
+            "retentionLikelihood": 86,
+            "swipeRisk": "low",
+            "internalMonologue": "I literally do that all the time. Glad I didn't skip.",
+            "emotionalValence": "intrigued",
+            "verdictTag": "Pain Point Hit",
+            "actionTaken": "watch_further"
+          },
+          {
+            "personaId": "algorithm_sentinel",
+            "personaName": "2026 Algo Sentinel",
+            "personaAvatar": "🤖",
+            "personaRole": "Distribution AI",
+            "retentionLikelihood": 79,
+            "swipeRisk": "moderate",
+            "internalMonologue": "Retention dip at t=7s detected. Jump-cut needed to prevent 10s cliff.",
+            "emotionalValence": "skeptical",
+            "verdictTag": "Mid-Watch Friction",
+            "actionTaken": "watch_further"
+          }
+        ],
+        "geminiPatch": {
+          "suggestedScriptRewrite": "Look at what happens right here when you do this — watch this exact error.",
+          "visualActionPatch": "Insert B-roll macro screenshot with red circle or arrow highlighting the error.",
+          "predictedRetentionBoost": "+24% Mid-Roll Retention",
+          "rationale": "Pointing at a concrete visual error transforms abstract talking into an engaging visual riddle."
+        }
+      },
+      {
+        "intervalIndex": 2,
+        "timeRange": "00:10 - 00:15",
+        "startSecond": 10,
+        "endSecond": 15,
+        "scriptSnippet": "Step 3 optimization in Morning Routine Hacks for Focus.",
+        "visualContext": "Instant transformation or solution revelation on screen with sound transient.",
+        "aggregateRetentionScore": 89,
+        "hazardLevel": "low",
+        "frictionPoint": "Payoff must be clear and frictionless to preserve completion momentum.",
+        "keyArousalTrigger": "Dopaminergic Relief & Practical Mastery",
+        "audienceReactions": [
+          {
+            "personaId": "fast_scroller",
+            "personaName": "Gen Z Fast-Scroller",
+            "personaAvatar": "⚡",
+            "personaRole": "Scroll Reflex: <1.0s",
+            "retentionLikelihood": 89,
+            "swipeRisk": "low",
+            "internalMonologue": "Oh that's clean! That took 2 seconds to understand.",
+            "emotionalValence": "hooked",
+            "verdictTag": "Payoff Delivered",
+            "actionTaken": "watch_further"
+          },
+          {
+            "personaId": "skeptic_expert",
+            "personaName": "Domain Skeptic",
+            "personaAvatar": "🧐",
+            "personaRole": "Proof-First Filter",
+            "retentionLikelihood": 92,
+            "swipeRisk": "low",
+            "internalMonologue": "Valid solution. Simple, reproducible, and verifiable.",
+            "emotionalValence": "intrigued",
+            "verdictTag": "Credibility Confirmed",
+            "actionTaken": "watch_further"
+          },
+          {
+            "personaId": "casual_browser",
+            "personaName": "Casual Viewer",
+            "personaAvatar": "🍿",
+            "personaRole": "Entertainment & Vibe",
+            "retentionLikelihood": 88,
+            "swipeRisk": "low",
+            "internalMonologue": "Satisfying payoff. Great editing.",
+            "emotionalValence": "entertained",
+            "verdictTag": "High Satisfaction",
+            "actionTaken": "watch_further"
+          },
+          {
+            "personaId": "high_intent_buyer",
+            "personaName": "Action-Taker",
+            "personaAvatar": "💼",
+            "personaRole": "Utility & Takeaway",
+            "retentionLikelihood": 96,
+            "swipeRisk": "low",
+            "internalMonologue": "Saved to my collection. Sending this to my team.",
+            "emotionalValence": "hooked",
+            "verdictTag": "Save & Share Triggered",
+            "actionTaken": "sharing"
+          },
+          {
+            "personaId": "algorithm_sentinel",
+            "personaName": "2026 Algo Sentinel",
+            "personaAvatar": "🤖",
+            "personaRole": "Distribution AI",
+            "retentionLikelihood": 93,
+            "swipeRisk": "low",
+            "internalMonologue": "Share velocity and rewatch signals surging. 2026 loop criteria met.",
+            "emotionalValence": "hooked",
+            "verdictTag": "Tier 1 FYP Boost",
+            "actionTaken": "sharing"
+          }
+        ],
+        "geminiPatch": {
+          "suggestedScriptRewrite": "All you change is this one step: do this, and your speed instantly doubles.",
+          "visualActionPatch": "Green checkmark chime sound effect + split screen showing the clean outcome.",
+          "predictedRetentionBoost": "+19% Share Velocity",
+          "rationale": "Clear before/after outcome creates high-status share motivation."
+        }
+      }
+    ]
+  },
+  "executive_summary": "",
+  "top_recommendation": "",
+  "hook_analysis": "",
+  "factors": [],
+  "hook_alternatives": []
+}

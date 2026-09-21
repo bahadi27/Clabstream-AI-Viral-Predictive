@@ -3,7 +3,7 @@ import { getAuth, GoogleAuthProvider, signInWithPopup, signOut as firebaseSignOu
 import {
   getFirestore,
   doc,
-  getDocFromServer,
+  getDoc,
   setDoc,
   getDocs,
   collection,
@@ -36,6 +36,13 @@ const firebaseConfig = {
   storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || appletConfig.storageBucket || "",
   messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || appletConfig.messagingSenderId || "",
 };
+
+export const isFirebaseConfigured = Boolean(
+  firebaseConfig.projectId &&
+  firebaseConfig.apiKey &&
+  firebaseConfig.projectId !== "" &&
+  firebaseConfig.apiKey !== ""
+);
 
 // Initialize Firebase App
 const app = initializeApp(firebaseConfig);
@@ -90,25 +97,29 @@ export function handleFirestoreError(error: unknown, operationType: OperationTyp
     operationType,
     path,
   };
-  console.error("Firestore Error Details: ", JSON.stringify(errInfo));
-  throw new Error(JSON.stringify(errInfo));
+  console.warn("Firestore Operation Notice: ", JSON.stringify(errInfo));
 }
 
-// Test Firestore connection on boot
+// Test Firestore connection on boot if configured
 export async function testConnection() {
+  if (!isFirebaseConfigured) return;
   try {
-    await getDocFromServer(doc(db, "test", "connection"));
+    await getDoc(doc(db, "test", "connection"));
   } catch (error) {
-    if (error instanceof Error && error.message.includes("client is offline")) {
-      console.warn("Firebase client appears to be offline or unreachable.");
-    }
+    // Graceful offline fallback
   }
 }
 
-testConnection();
+if (isFirebaseConfigured) {
+  testConnection();
+}
 
 // Auth helper functions
 export async function loginWithGoogle() {
+  if (!isFirebaseConfigured) {
+    console.warn("Firebase is not fully configured for Google Auth.");
+    return null;
+  }
   try {
     const result = await signInWithPopup(auth, googleProvider);
     const user = result.user;
@@ -142,6 +153,7 @@ export async function loginWithGoogle() {
 }
 
 export async function logoutUser() {
+  if (!isFirebaseConfigured) return;
   return firebaseSignOut(auth);
 }
 
@@ -173,6 +185,7 @@ function sanitizeAnalysisForFirestore(analysis: ViralityAnalysis): Record<string
 
 // Firestore analyses operations
 export async function saveAnalysisToFirestore(userId: string, analysis: ViralityAnalysis) {
+  if (!isFirebaseConfigured || !userId) return;
   const path = `users/${userId}/analyses/${analysis.id}`;
   try {
     const payload = sanitizeAnalysisForFirestore(analysis);
@@ -190,6 +203,7 @@ export async function saveAnalysisToFirestore(userId: string, analysis: Virality
 }
 
 export async function fetchUserAnalyses(userId: string): Promise<ViralityAnalysis[]> {
+  if (!isFirebaseConfigured || !userId) return [];
   const path = `users/${userId}/analyses`;
   try {
     const colRef = collection(db, "users", userId, "analyses");
@@ -205,7 +219,33 @@ export async function fetchUserAnalyses(userId: string): Promise<ViralityAnalysi
   }
 }
 
+export async function saveSharedAnalysisToFirestore(analysis: ViralityAnalysis) {
+  if (!isFirebaseConfigured) return;
+  try {
+    const payload = sanitizeAnalysisForFirestore(analysis);
+    const topDocRef = doc(db, "analyses", analysis.id);
+    await setDoc(topDocRef, payload, { merge: true });
+  } catch (err) {
+    console.warn("Could not save top-level shared analysis to Firestore:", err);
+  }
+}
+
+export async function fetchSharedAnalysisFromFirestore(analysisId: string): Promise<ViralityAnalysis | null> {
+  if (!isFirebaseConfigured || !analysisId) return null;
+  try {
+    const docRef = doc(db, "analyses", analysisId);
+    const snap = await getDoc(docRef);
+    if (snap.exists()) {
+      return snap.data() as ViralityAnalysis;
+    }
+  } catch (err) {
+    console.warn("Could not fetch shared analysis from Firestore:", err);
+  }
+  return null;
+}
+
 export async function deleteAnalysisFromFirestore(userId: string, analysisId: string) {
+  if (!isFirebaseConfigured || !userId || !analysisId) return;
   const path = `users/${userId}/analyses/${analysisId}`;
   try {
     await deleteDoc(doc(db, "users", userId, "analyses", analysisId));
@@ -214,3 +254,4 @@ export async function deleteAnalysisFromFirestore(userId: string, analysisId: st
     handleFirestoreError(err, OperationType.DELETE, path);
   }
 }
+

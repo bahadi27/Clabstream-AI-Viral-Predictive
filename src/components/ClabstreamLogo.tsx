@@ -2,42 +2,43 @@ import React from "react";
 
 interface ClabstreamLogoProps {
   className?: string;
-  variant?: "dark" | "light";
+  size?: "sm" | "md" | "lg";
   showText?: boolean;
+  variant?: "dark" | "light";
 }
 
 export const ClabstreamLogo: React.FC<ClabstreamLogoProps> = ({
-  className = "h-9 w-auto",
-  variant = "dark",
+  className = "",
+  size = "md",
   showText = true,
+  variant = "dark",
 }) => {
-  const isLight = variant === "light";
-  const textColor = isLight ? "#FFFFFF" : "#111111";
-  const subTextColor = isLight ? "rgba(255,255,255,0.85)" : "#333333";
+  const sizeClasses = {
+    sm: "h-6",
+    md: "h-8",
+    lg: "h-10",
+  };
 
   return (
-    <div className={`inline-flex items-center gap-3 ${className}`}>
-      {/* Official Clabstream Logo Image */}
+    <div className={`flex items-center gap-2.5 ${className}`}>
+      {/* Official Clabstream Agency Logo Image */}
       <img
         src="https://images.glints.com/unsafe/1200x0/glints-dashboard.oss-ap-southeast-1-internal.aliyuncs.com/company-logo/9a8b8496cde4c7c28571b7c676819468.png"
-        alt="Clabstream Logo"
+        alt="Clabstream Agency Logo"
         referrerPolicy="no-referrer"
-        className="h-9 w-auto max-w-[140px] object-contain rounded-xs bg-white p-0.5 border border-[#E5E5E5] shrink-0"
+        className={`${sizeClasses[size]} w-auto object-contain shrink-0`}
       />
-
       {showText && (
-        <div className="flex flex-col text-left leading-none">
+        <div className="flex flex-col text-left">
           <span
-            className="font-display font-extrabold text-base tracking-tight"
-            style={{ color: textColor }}
+            className={`font-display font-extrabold tracking-tight leading-none ${
+              variant === "light" ? "text-neutral-900 text-sm" : "text-white text-sm"
+            }`}
           >
             CLABSTREAM
           </span>
-          <span
-            className="font-mono text-[9px] font-bold tracking-widest uppercase mt-0.5"
-            style={{ color: subTextColor }}
-          >
-            MEDIA LABS
+          <span className="font-mono text-[9px] font-bold tracking-widest text-[#00F5D4] uppercase">
+            CREATIVE AGENCY
           </span>
         </div>
       )}

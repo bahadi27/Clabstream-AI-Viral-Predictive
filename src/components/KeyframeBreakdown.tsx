@@ -1,20 +1,28 @@
 import React, { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import { VideoKeyframe } from "../types";
-import { Camera, Eye, Zap, Sparkles, Maximize2, X, Brain } from "lucide-react";
+import { Camera, Eye, Zap, Sparkles, Maximize2, X, Brain, Play } from "lucide-react";
+import { parseTimestampToSeconds } from "./MiniVideoPlayer";
 
 interface KeyframeBreakdownProps {
   keyframes?: VideoKeyframe[];
   onOpenKeyframeInsight?: (keyframe: VideoKeyframe) => void;
+  onSeekToKeyframe?: (timeInSeconds: number) => void;
 }
 
 export const KeyframeBreakdown: React.FC<KeyframeBreakdownProps> = ({
   keyframes,
   onOpenKeyframeInsight,
+  onSeekToKeyframe,
 }) => {
   const [selectedFrame, setSelectedFrame] = useState<VideoKeyframe | null>(null);
 
   const handleFrameClick = (kf: VideoKeyframe) => {
     setSelectedFrame(kf);
+    if (onSeekToKeyframe) {
+      const sec = parseTimestampToSeconds(kf.timeInSeconds ?? kf.timestamp);
+      onSeekToKeyframe(sec);
+    }
     if (onOpenKeyframeInsight) {
       onOpenKeyframeInsight(kf);
     }
@@ -61,7 +69,7 @@ export const KeyframeBreakdown: React.FC<KeyframeBreakdownProps> = ({
               Multimodal Frame Screenshots
             </span>
             <span className="bg-[#111111] text-white text-[10px] font-mono px-2 py-0.5 rounded-xs font-bold uppercase">
-              Gemini 3.6 Visual Perception
+              Gemini 3.8 Visual Perception
             </span>
           </div>
           <h2 className="font-display font-extrabold text-2xl text-[#111111] mt-1">
@@ -75,16 +83,19 @@ export const KeyframeBreakdown: React.FC<KeyframeBreakdownProps> = ({
         </div>
       </div>
 
-      {/* Grid of Keyframe Screenshots */}
+      {/* Grid of Keyframe Screenshots with Framer Motion hover animations */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {keyframes.map((kf, idx) => {
           const style = getTypeStyle(kf.type);
 
           return (
-            <div
+            <motion.div
               key={idx}
               onClick={() => handleFrameClick(kf)}
-              className="bg-[#F4F4F4] border border-[#E5E5E5] rounded-sm overflow-hidden flex flex-col justify-between hover:border-[#111111] transition-all cursor-pointer group shadow-xs"
+              whileHover={{ y: -4, scale: 1.015 }}
+              whileTap={{ scale: 0.985 }}
+              transition={{ type: "spring", stiffness: 400, damping: 25 }}
+              className="bg-[#F4F4F4] border border-[#E5E5E5] rounded-sm overflow-hidden flex flex-col justify-between hover:border-[#111111] hover:shadow-md transition-all cursor-pointer group shadow-xs"
             >
               {/* Frame Thumbnail Container */}
               <div className="relative aspect-video bg-black overflow-hidden flex items-center justify-center">
@@ -92,7 +103,7 @@ export const KeyframeBreakdown: React.FC<KeyframeBreakdownProps> = ({
                   <img
                     src={kf.imageData}
                     alt={kf.label}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
                   />
                 ) : (
                   /* Stylized fallback frame visual */
@@ -128,7 +139,7 @@ export const KeyframeBreakdown: React.FC<KeyframeBreakdownProps> = ({
               {/* Text Meta Info */}
               <div className="p-4 flex-1 flex flex-col justify-between">
                 <div>
-                  <h3 className="font-display font-bold text-sm text-[#111111] mb-1 line-clamp-1">
+                  <h3 className="font-display font-bold text-sm text-[#111111] mb-1 line-clamp-1 group-hover:text-black">
                     {kf.label}
                   </h3>
 
@@ -144,85 +155,99 @@ export const KeyframeBreakdown: React.FC<KeyframeBreakdownProps> = ({
                   </div>
                 )}
               </div>
-            </div>
+            </motion.div>
           );
         })}
       </div>
 
-      {/* Frame Detail Modal */}
-      {selectedFrame && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="max-w-2xl w-full bg-white rounded-sm border border-[#E5E5E5] shadow-2xl overflow-hidden relative animate-fadeIn">
-            <button
-              onClick={() => setSelectedFrame(null)}
-              className="absolute top-3 right-3 z-10 p-2 bg-white border border-[#E5E5E5] rounded-xs text-[#111111] hover:border-[#111111] transition-colors"
+      {/* Frame Detail Modal with Framer Motion */}
+      <AnimatePresence>
+        {selectedFrame && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-50 bg-black/80 backdrop-blur-xs flex items-center justify-center p-4"
+          >
+            <motion.div
+              initial={{ scale: 0.94, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.94, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 400, damping: 28 }}
+              className="max-w-2xl w-full bg-white rounded-sm border border-[#E5E5E5] shadow-2xl overflow-hidden relative"
             >
-              <X className="w-4 h-4" />
-            </button>
+              <button
+                onClick={() => setSelectedFrame(null)}
+                className="absolute top-3 right-3 z-10 p-2 bg-white border border-[#E5E5E5] rounded-xs text-[#111111] hover:border-[#111111] transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
 
-            {/* Modal Image View */}
-            <div className="bg-black relative aspect-video flex items-center justify-center border-b border-[#E5E5E5]">
-              {selectedFrame.imageData ? (
-                <img
-                  src={selectedFrame.imageData}
-                  alt={selectedFrame.label}
-                  className="w-full h-full object-contain"
-                />
-              ) : (
-                <div className="p-8 text-center text-white/60 font-mono text-sm">
-                  Full Resolution Keyframe Screenshot
-                </div>
-              )}
+              {/* Modal Image View */}
+              <div className="bg-black relative aspect-video flex items-center justify-center border-b border-[#E5E5E5]">
+                {selectedFrame.imageData ? (
+                  <img
+                    src={selectedFrame.imageData}
+                    alt={selectedFrame.label}
+                    className="w-full h-full object-contain"
+                  />
+                ) : (
+                  <div className="p-8 text-center text-white/60 font-mono text-sm">
+                    Full Resolution Keyframe Screenshot
+                  </div>
+                )}
 
-              <div className="absolute bottom-3 left-3 bg-black/80 backdrop-blur-xs border border-white/20 p-2.5 rounded-xs text-white font-mono text-xs flex items-center gap-3">
-                <span className="font-bold text-white">{selectedFrame.timestamp}</span>
-                <span>•</span>
-                <span className="font-semibold">{selectedFrame.label}</span>
-              </div>
-            </div>
-
-            {/* Modal Content Details */}
-            <div className="p-6 space-y-4">
-              <div className="flex justify-between items-center">
-                <div>
-                  <span className="font-mono text-xs font-bold text-[#111111] uppercase tracking-wider">
-                    Neural Keyframe Diagnosis
-                  </span>
-                  <h3 className="font-display font-extrabold text-xl text-[#111111] mt-0.5">
-                    {selectedFrame.label}
-                  </h3>
-                </div>
-
-                <div className="text-right">
-                  <span className="font-mono text-xs text-[#444444] uppercase block font-bold">
-                    Salience Score
-                  </span>
-                  <span className="font-display font-extrabold text-3xl text-[#111111]">
-                    {selectedFrame.score} / 100
-                  </span>
+                <div className="absolute bottom-3 left-3 bg-black/80 backdrop-blur-xs border border-white/20 p-2.5 rounded-xs text-white font-mono text-xs flex items-center gap-3">
+                  <span className="font-bold text-white">{selectedFrame.timestamp}</span>
+                  <span>•</span>
+                  <span className="font-semibold">{selectedFrame.label}</span>
                 </div>
               </div>
 
-              <div className="bg-[#F4F4F4] border border-[#E5E5E5] p-4 rounded-xs text-xs font-sans text-[#333333] leading-relaxed">
-                <span className="font-mono font-bold text-[#111111] block mb-1">
-                  QUALITATIVE PERCEPTUAL DIAGNOSIS:
-                </span>
-                {selectedFrame.note}
-              </div>
+              {/* Modal Content Details */}
+              <div className="p-6 space-y-4">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <span className="font-mono text-xs font-bold text-[#111111] uppercase tracking-wider">
+                      Neural Keyframe Diagnosis
+                    </span>
+                    <h3 className="font-display font-extrabold text-xl text-[#111111] mt-0.5">
+                      {selectedFrame.label}
+                    </h3>
+                  </div>
 
-              {selectedFrame.brainActivation && (
-                <div className="bg-[#111111] text-white p-3.5 rounded-xs font-mono text-xs flex items-center gap-2.5">
-                  <Brain className="w-4 h-4 text-white shrink-0" />
-                  <span>
-                    <strong className="text-white">Target Brain Activation:</strong>{" "}
-                    {selectedFrame.brainActivation}
-                  </span>
+                  <div className="text-right">
+                    <span className="font-mono text-xs text-[#444444] uppercase block font-bold">
+                      Salience Score
+                    </span>
+                    <span className="font-display font-extrabold text-3xl text-[#111111]">
+                      {selectedFrame.score} / 100
+                    </span>
+                  </div>
                 </div>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
+
+                <div className="bg-[#F4F4F4] border border-[#E5E5E5] p-4 rounded-xs text-xs font-sans text-[#333333] leading-relaxed">
+                  <span className="font-mono font-bold text-[#111111] block mb-1">
+                    QUALITATIVE PERCEPTUAL DIAGNOSIS:
+                  </span>
+                  {selectedFrame.note}
+                </div>
+
+                {selectedFrame.brainActivation && (
+                  <div className="bg-[#111111] text-white p-3.5 rounded-xs font-mono text-xs flex items-center gap-2.5">
+                    <Brain className="w-4 h-4 text-white shrink-0" />
+                    <span>
+                      <strong className="text-white">Target Brain Activation:</strong>{" "}
+                      {selectedFrame.brainActivation}
+                    </span>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

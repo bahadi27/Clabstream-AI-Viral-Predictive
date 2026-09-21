@@ -1,6 +1,6 @@
 {
   "name": "NeuroViral",
-  "description": "Neuroscience-backed virality prediction platform powered by Gemini 3.6 with 14-region brain map, 6-stage AI reasoning pipeline, platform forecasts, and hook rewriter.",
-  "requestFramePermissions": [],
+  "description": "Neuroscience-backed virality prediction platform with 14-region brain map, multilingual language detection & confidence scoring, native localized hook generator, AI Video Prompt Studio, and algorithmic benchmark comparison.",
+  "requestFramePermissions": ["microphone"],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

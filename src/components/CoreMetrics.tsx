@@ -33,8 +33,10 @@ export const CoreMetrics: React.FC<CoreMetricsProps> = ({
       sublabel: "First 1-3s Attention Salience",
       value: hookScore,
       margin: 2.1,
-      icon: <Zap className="w-5 h-5 text-white" />,
-      bg: "bg-[#111111] text-white",
+      icon: <Zap className="w-5 h-5 text-black" />,
+      accentBg: "bg-gradient-to-br from-[#00F5D4] to-teal-400",
+      glowClass: "hover:border-[#00F5D4]/60 hover:shadow-lg hover:shadow-[#00F5D4]/10",
+      numColor: "text-[#00F5D4]",
     },
     {
       label: "HOLD RATE",
@@ -42,7 +44,9 @@ export const CoreMetrics: React.FC<CoreMetricsProps> = ({
       value: holdRate,
       margin: 2.3,
       icon: <Eye className="w-5 h-5 text-white" />,
-      bg: "bg-neutral-800 text-white",
+      accentBg: "bg-gradient-to-br from-indigo-500 to-purple-600",
+      glowClass: "hover:border-indigo-500/60 hover:shadow-lg hover:shadow-indigo-500/10",
+      numColor: "text-indigo-400",
     },
     {
       label: "SHARE VELOCITY",
@@ -50,18 +54,20 @@ export const CoreMetrics: React.FC<CoreMetricsProps> = ({
       value: shareVelocity,
       margin: 2.0,
       icon: <Share2 className="w-5 h-5 text-white" />,
-      bg: "bg-neutral-900 text-white",
+      accentBg: "bg-gradient-to-br from-[#FF0055] to-rose-600",
+      glowClass: "hover:border-[#FF0055]/60 hover:shadow-lg hover:shadow-[#FF0055]/10",
+      numColor: "text-[#FF0055]",
     },
   ];
 
   const expandedMetrics = [
-    { label: "Retention Score", val: retentionScore },
-    { label: "Emotion Arousal", val: emotionArousal },
-    { label: "Novelty Index", val: noveltyIndex },
-    { label: "Clarity Score", val: clarityScore },
-    { label: "Pacing Rhythm", val: pacingScore },
-    { label: "Audio Engagement", val: audioEngagement },
-    { label: "Visual Density", val: visualDensity },
+    { label: "Retention Score", val: retentionScore, color: "text-[#00F5D4]" },
+    { label: "Emotion Arousal", val: emotionArousal, color: "text-[#FF0055]" },
+    { label: "Novelty Index", val: noveltyIndex, color: "text-[#FFB703]" },
+    { label: "Clarity Score", val: clarityScore, color: "text-[#00F5D4]" },
+    { label: "Pacing Rhythm", val: pacingScore, color: "text-purple-400" },
+    { label: "Audio Engagement", val: audioEngagement, color: "text-indigo-400" },
+    { label: "Visual Density", val: visualDensity, color: "text-[#00F5D4]" },
   ];
 
   return (
@@ -73,27 +79,30 @@ export const CoreMetrics: React.FC<CoreMetricsProps> = ({
           const upper = Math.min(100, Math.round((m.value + m.margin) * 10) / 10);
 
           return (
-            <div key={idx} className="bg-white border border-[#E5E5E5] rounded-sm p-6 shadow-xs hover:border-[#111111] transition-colors">
+            <div 
+              key={idx} 
+              className={`cyber-glass rounded-xs p-6 border border-white/10 transition-all duration-300 ${m.glowClass}`}
+            >
               <div className="flex justify-between items-start mb-4">
                 <div>
-                  <span className="font-mono text-xs uppercase font-bold text-[#111111] tracking-wider block">
+                  <span className="font-mono text-[10px] uppercase font-bold text-neutral-400 tracking-wider block">
                     {m.sublabel}
                   </span>
-                  <h3 className="font-display font-extrabold text-lg text-[#111111] mt-1">{m.label}</h3>
+                  <h3 className="font-display font-bold text-lg text-white mt-1">{m.label}</h3>
                 </div>
-                <div className={`p-2.5 rounded-sm ${m.bg}`}>
+                <div className={`p-2.5 rounded-xs shadow-md ${m.accentBg}`}>
                   {m.icon}
                 </div>
               </div>
 
               <div className="flex items-baseline justify-between gap-2">
                 <div className="flex items-baseline gap-2">
-                  <span className="font-display font-extrabold text-5xl text-[#111111]">{m.value}</span>
-                  <span className="font-mono text-xs font-semibold text-[#555555]">/ 100</span>
+                  <span className={`font-display font-extrabold text-5xl ${m.numColor}`}>{m.value}</span>
+                  <span className="font-mono text-xs font-semibold text-neutral-500">/ 100</span>
                 </div>
 
-                <div className="bg-neutral-100 border border-neutral-300 text-neutral-900 font-mono text-[11px] font-bold px-2 py-0.5 rounded-xs flex items-center gap-1">
-                  <ShieldCheck className="w-3 h-3 text-neutral-900" />
+                <div className="bg-white/5 border border-white/10 text-neutral-300 font-mono text-[10px] font-bold px-2 py-0.5 rounded-xs flex items-center gap-1">
+                  <ShieldCheck className="w-3 h-3 text-[#00F5D4]" />
                   <span>±{m.margin} (CI: {lower}–{upper})</span>
                 </div>
               </div>
@@ -103,30 +112,30 @@ export const CoreMetrics: React.FC<CoreMetricsProps> = ({
       </div>
 
       {/* 7 Expanded Neural Metrics */}
-      <div className="bg-white border border-[#E5E5E5] rounded-sm p-6 shadow-xs">
-        <div className="border-b border-[#E5E5E5] pb-4 mb-6 flex justify-between items-center">
+      <div className="cyber-glass rounded-xs p-6 border border-white/10 shadow-xl">
+        <div className="border-b border-white/10 pb-4 mb-6 flex justify-between items-center">
           <div>
-            <span className="text-xs font-mono font-bold text-[#111111] uppercase tracking-wider">
+            <span className="text-xs font-mono font-bold text-[#00F5D4] uppercase tracking-wider">
               Expanded Neural Signal Metrics
             </span>
-            <h3 className="font-display font-bold text-xl text-[#111111] mt-1">
+            <h3 className="font-display font-bold text-xl text-white mt-1">
               Cognitive Signal Profile (95% Confidence Band)
             </h3>
           </div>
-          <Sparkles className="w-5 h-5 text-[#111111]" />
+          <Sparkles className="w-5 h-5 text-[#00F5D4]" />
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-7 gap-4">
           {expandedMetrics.map((m, idx) => (
-            <div key={idx} className="bg-[#F4F4F4] border border-[#E5E5E5] p-3.5 rounded-sm text-center">
-              <span className="font-mono text-[10px] text-[#444444] uppercase font-bold block mb-1 truncate">
+            <div key={idx} className="bg-white/5 border border-white/10 p-3.5 rounded-xs text-center hover:border-white/20 transition-colors">
+              <span className="font-mono text-[10px] text-neutral-400 uppercase font-bold block mb-1 truncate">
                 {m.label}
               </span>
               <div className="flex items-baseline justify-center gap-1">
-                <span className="font-display font-extrabold text-2xl text-[#111111]">
+                <span className={`font-display font-extrabold text-2xl ${m.color}`}>
                   {m.val}
                 </span>
-                <span className="font-mono text-[10px] text-neutral-800 font-semibold">
+                <span className="font-mono text-[10px] text-neutral-500 font-semibold">
                   ±2.0
                 </span>
               </div>

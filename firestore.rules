@@ -42,6 +42,12 @@ service cloud.firestore {
         && data.virality_score is number;
     }
 
+    function isValidSharedAnalysis(data) {
+      return data.id is string
+        && data.id.size() <= 128
+        && data.virality_score is number;
+    }
+
     // Users collection
     match /users/{userId} {
       allow get: if isValidId(userId) && isOwner(userId);
@@ -57,11 +63,11 @@ service cloud.firestore {
       }
     }
 
-    // Top-level shared analyses collection
+    // Top-level open-domain shared analyses collection (accessible to all users & guests by report ID)
     match /analyses/{analysisId} {
-      allow get: if isValidId(analysisId) && isSignedIn();
+      allow get: if isValidId(analysisId);
       allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
-      allow create, update: if isValidId(analysisId) && isSignedIn() && incoming().userId == request.auth.uid && isValidAnalysis(incoming());
+      allow create, update: if isValidId(analysisId) && isValidSharedAnalysis(incoming());
       allow delete: if isValidId(analysisId) && isSignedIn() && existing().userId == request.auth.uid;
     }
   }

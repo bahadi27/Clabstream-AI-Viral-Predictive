@@ -1,5 +1,6 @@
 import React from "react";
 import { Lightbulb, Compass, HeartHandshake, Target } from "lucide-react";
+import { sanitizeText } from "../lib/sanitize";
 
 interface StrategicSectionProps {
   hookAnalysis: string;
@@ -31,7 +32,7 @@ export const StrategicSection: React.FC<StrategicSectionProps> = ({
           </h3>
 
           <p className="font-sans font-medium text-sm md:text-base leading-relaxed text-white/90 bg-white/10 border border-white/10 p-4 rounded-xs">
-            {topRecommendation}
+            {sanitizeText(topRecommendation)}
           </p>
         </div>
       )}

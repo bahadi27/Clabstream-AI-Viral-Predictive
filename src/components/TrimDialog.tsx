@@ -7,6 +7,7 @@ interface TrimDialogProps {
   duration: number;
   onClose: () => void;
   onConfirmTrim: (startTime: number, endTime: number) => void;
+  onAnalyzeFullVideo?: () => void;
 }
 
 export const TrimDialog: React.FC<TrimDialogProps> = ({
@@ -15,6 +16,7 @@ export const TrimDialog: React.FC<TrimDialogProps> = ({
   duration,
   onClose,
   onConfirmTrim,
+  onAnalyzeFullVideo,
 }) => {
   const [startTime, setStartTime] = useState(0);
   const [endTime, setEndTime] = useState(Math.min(15, duration));
@@ -73,10 +75,10 @@ export const TrimDialog: React.FC<TrimDialogProps> = ({
           </div>
           <div>
             <h3 className="font-display font-bold text-lg text-[#111111]">
-              TRIM TO ≤ 15 SECONDS
+              VIDEO DURATION & HOOK FOCUS
             </h3>
             <p className="text-xs font-mono text-[#555555]">
-              Video is {duration.toFixed(1)}s. fMRI virality pipeline requires max 15s clip.
+              Video duration is {(duration || 0).toFixed(1)}s. Focus-trim to a 15s hook segment for high precision, or analyze the full clip directly.
             </p>
           </div>
         </div>
@@ -101,15 +103,15 @@ export const TrimDialog: React.FC<TrimDialogProps> = ({
         <div className="space-y-4 my-4">
           <div>
             <div className="flex justify-between text-xs font-mono text-[#111111] mb-1 font-semibold">
-              <span>Start Frame: {startTime.toFixed(1)}s</span>
-              <span>End Frame: {endTime.toFixed(1)}s</span>
+              <span>Start Frame: {(startTime || 0).toFixed(1)}s</span>
+              <span>End Frame: {(endTime || 0).toFixed(1)}s</span>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <input
                 type="range"
                 min="0"
-                max={Math.max(0, duration - 1)}
+                max={Math.max(0, (duration || 0) - 1)}
                 step="0.1"
                 value={startTime}
                 onChange={(e) => {
@@ -122,7 +124,7 @@ export const TrimDialog: React.FC<TrimDialogProps> = ({
               <input
                 type="range"
                 min={startTime + 1}
-                max={duration}
+                max={duration || 0}
                 step="0.1"
                 value={endTime}
                 onChange={(e) => {
@@ -136,31 +138,41 @@ export const TrimDialog: React.FC<TrimDialogProps> = ({
           </div>
 
           <div className="flex justify-between items-center text-xs font-mono p-3 bg-[#F4F4F4] border border-[#E5E5E5] rounded-xs">
-            <span className="text-[#333333] font-semibold">Clip Length:</span>
-            <span
-              className={`font-bold ${
-                isValidLength ? "text-[#111111]" : "text-black underline font-extrabold"
-              }`}
-            >
-              {currentLength.toFixed(1)}s {isValidLength ? "(Valid ≤ 15s)" : "(Too long)"}
+            <span className="text-[#333333] font-semibold">Trimmed Window:</span>
+            <span className="font-bold text-[#111111]">
+              {(currentLength || 0).toFixed(1)}s segment ({(startTime || 0).toFixed(1)}s – {(endTime || 0).toFixed(1)}s)
             </span>
           </div>
         </div>
 
-        <div className="flex justify-end gap-3 pt-2">
-          <button
-            onClick={onClose}
-            className="px-4 py-2 border border-[#E5E5E5] text-xs font-mono text-[#111111] rounded-xs hover:border-[#111111]"
-          >
-            Cancel
-          </button>
-          <button
-            disabled={!isValidLength}
-            onClick={() => onConfirmTrim(startTime, endTime)}
-            className="px-5 py-2 bg-[#111111] text-white text-xs font-mono font-bold rounded-xs hover:bg-black disabled:opacity-40"
-          >
-            Confirm Trim & Process
-          </button>
+        <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-[#E5E5E5]">
+          {onAnalyzeFullVideo && (
+            <button
+              type="button"
+              onClick={onAnalyzeFullVideo}
+              className="px-3.5 py-2 border border-[#E5E5E5] text-xs font-mono font-bold text-[#111111] bg-white rounded-xs hover:border-[#111111] transition-colors"
+            >
+              Analyze Full Video ({(duration || 0).toFixed(0)}s)
+            </button>
+          )}
+
+          <div className="flex items-center gap-2 ml-auto">
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-3 py-2 text-xs font-mono text-[#555555] hover:text-[#111111]"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              disabled={!isValidLength}
+              onClick={() => onConfirmTrim(startTime, endTime)}
+              className="px-4 py-2 bg-[#111111] text-white text-xs font-mono font-bold rounded-xs hover:bg-black disabled:opacity-40"
+            >
+              Confirm Trim ({(currentLength || 0).toFixed(1)}s)
+            </button>
+          </div>
         </div>
       </div>
     </div>
