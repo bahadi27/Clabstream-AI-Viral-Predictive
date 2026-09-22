@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { motion } from "motion/react";
 import { ViralityTier, ConfidenceInterval, PreviousRunSummary } from "../types";
 import { cleanViralityTier } from "../lib/sanitize";
 import { Zap, Activity, Flame, Award, HelpCircle, ShieldCheck, X, RefreshCw, PartyPopper } from "lucide-react";
@@ -179,17 +180,21 @@ export const ViralityScore: React.FC<ViralityScoreProps> = ({
         <div className="space-y-1 mb-2">
           <div className="relative w-full bg-white/5 h-3.5 rounded-full overflow-hidden p-0.5 border border-white/10">
             {/* Lower to Upper Range Overlay Highlight */}
-            <div
-              className="absolute top-0 bottom-0 bg-[#00F5D4]/30 rounded-full transition-all duration-1000"
-              style={{
+            <motion.div
+              className="data-bar absolute top-0 bottom-0 bg-[#00F5D4]/30 rounded-full"
+              initial={{ left: "0%", width: "0%" }}
+              animate={{
                 left: `${Math.min(100, Math.max(0, lower))}%`,
                 width: `${Math.min(100, Math.max(2, upper - lower))}%`,
               }}
+              transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
             />
             {/* Mean Score Indicator Bar */}
-            <div
-              className="h-full bg-gradient-to-r from-teal-400 to-[#00F5D4] rounded-full transition-all duration-1000 ease-out relative z-10 shadow-lg shadow-[#00F5D4]/50"
-              style={{ width: `${Math.min(100, Math.max(0, score))}%` }}
+            <motion.div
+              className="data-bar h-full bg-gradient-to-r from-teal-400 to-[#00F5D4] rounded-full relative z-10 shadow-lg shadow-[#00F5D4]/50"
+              initial={{ width: "0%" }}
+              animate={{ width: `${Math.min(100, Math.max(0, score))}%` }}
+              transition={{ duration: 1.25, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
             />
           </div>
           <div className="flex justify-between text-[10px] font-mono text-neutral-400 font-semibold px-0.5">

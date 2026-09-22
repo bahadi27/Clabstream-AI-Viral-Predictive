@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "motion/react";
 import { PlatformScores as PlatformScoresType } from "../types";
 import { Video, Instagram } from "lucide-react";
 
@@ -46,7 +47,7 @@ export const PlatformScores: React.FC<PlatformScoresProps> = ({ scores }) => {
         </div>
 
         <div className="space-y-4">
-          {platforms.map((p) => (
+          {platforms.map((p, idx) => (
             <div key={p.key} className="bg-[#F4F4F4] border border-[#E5E5E5] p-4 rounded-sm space-y-2">
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-2.5">
@@ -64,9 +65,15 @@ export const PlatformScores: React.FC<PlatformScoresProps> = ({ scores }) => {
 
               {/* Progress bar */}
               <div className="w-full h-2.5 rounded-full bg-white border border-[#E5E5E5] overflow-hidden">
-                <div
-                  className="h-full bg-[#111111] rounded-full transition-all duration-700"
-                  style={{ width: `${Math.min(100, Math.max(0, p.score))}%` }}
+                <motion.div
+                  className="data-bar h-full bg-[#111111] rounded-full"
+                  initial={{ width: "0%" }}
+                  animate={{ width: `${Math.min(100, Math.max(0, p.score))}%` }}
+                  transition={{
+                    duration: 1.0,
+                    ease: [0.16, 1, 0.3, 1],
+                    delay: 0.15 + idx * 0.15,
+                  }}
                 />
               </div>
 

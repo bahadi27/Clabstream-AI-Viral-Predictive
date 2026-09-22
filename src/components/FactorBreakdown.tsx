@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "motion/react";
 import { FactorMechanic } from "../types";
 import { BookOpen } from "lucide-react";
 
@@ -34,6 +35,20 @@ export const FactorBreakdown: React.FC<FactorBreakdownProps> = ({ factors }) => 
                 <span className="font-mono font-bold text-xs px-2.5 py-1 bg-[#111111] text-white rounded-xs shrink-0">
                   {item.score} / 100
                 </span>
+              </div>
+
+              {/* Animated Progress Data-Bar */}
+              <div className="w-full h-1.5 rounded-full bg-white border border-[#E5E5E5] overflow-hidden mb-3">
+                <motion.div
+                  className="data-bar h-full bg-[#111111] rounded-full"
+                  initial={{ width: "0%" }}
+                  animate={{ width: `${Math.min(100, Math.max(0, item.score))}%` }}
+                  transition={{
+                    duration: 0.95,
+                    ease: [0.16, 1, 0.3, 1],
+                    delay: 0.15 + idx * 0.1,
+                  }}
+                />
               </div>
 
               <p className="text-xs font-sans text-[#333333] font-normal mb-3 leading-relaxed">

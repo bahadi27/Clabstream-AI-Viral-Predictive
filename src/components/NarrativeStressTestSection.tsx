@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { motion } from "motion/react";
 import {
   ShieldAlert,
   Sparkles,
@@ -227,15 +228,17 @@ export const NarrativeStressTestSection: React.FC<NarrativeStressTestSectionProp
               <span className="text-xs text-slate-400">/ 100</span>
             </div>
             <div className="w-full bg-slate-800 h-1.5 rounded-full mt-2 overflow-hidden">
-              <div
-                className={`h-full rounded-full ${
+              <motion.div
+                className={`data-bar h-full rounded-full ${
                   stressTest.overallDurabilityScore >= 85
                     ? "bg-emerald-500"
                     : stressTest.overallDurabilityScore >= 70
                     ? "bg-amber-500"
                     : "bg-rose-500"
                 }`}
-                style={{ width: `${stressTest.overallDurabilityScore}%` }}
+                initial={{ width: "0%" }}
+                animate={{ width: `${stressTest.overallDurabilityScore}%` }}
+                transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
               />
             </div>
           </div>

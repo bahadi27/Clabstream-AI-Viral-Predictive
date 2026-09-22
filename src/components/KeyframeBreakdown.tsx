@@ -15,6 +15,22 @@ export const KeyframeBreakdown: React.FC<KeyframeBreakdownProps> = ({
   onOpenKeyframeInsight,
   onSeekToKeyframe,
 }) => {
+  if (!keyframes || keyframes.length === 0) return null;
+
+  return (
+    <KeyframeBreakdownContent
+      keyframes={keyframes}
+      onOpenKeyframeInsight={onOpenKeyframeInsight}
+      onSeekToKeyframe={onSeekToKeyframe}
+    />
+  );
+};
+
+const KeyframeBreakdownContent: React.FC<KeyframeBreakdownProps> = ({
+  keyframes,
+  onOpenKeyframeInsight,
+  onSeekToKeyframe,
+}) => {
   const [selectedFrame, setSelectedFrame] = useState<VideoKeyframe | null>(null);
 
   const handleFrameClick = (kf: VideoKeyframe) => {
@@ -27,8 +43,6 @@ export const KeyframeBreakdown: React.FC<KeyframeBreakdownProps> = ({
       onOpenKeyframeInsight(kf);
     }
   };
-
-  if (!keyframes || keyframes.length === 0) return null;
 
   const getTypeStyle = (type: VideoKeyframe["type"]) => {
     switch (type) {

@@ -72,8 +72,6 @@ export const RetentionCurve: React.FC<RetentionCurveProps> = ({
     }
   };
 
-  if (!curve || curve.length === 0) return null;
-
   // Helper to format seconds into mm:ss
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -247,6 +245,8 @@ export const RetentionCurve: React.FC<RetentionCurveProps> = ({
   const avgWatchSeconds = (((avgWatchPercentage || 0) / 100) * (selectedDuration || 30)).toFixed(1);
   const firstRetention = chartData[0]?.retention ?? 100;
   const netDropOff = (firstRetention - completionRate).toFixed(1);
+
+  if (!curve || curve.length === 0) return null;
 
   // Active highlighted keyframe (defaults to first keyframe if none selected)
   const activeDisplayKeyframe = selectedKeyframe || effectiveKeyframes[0] || null;

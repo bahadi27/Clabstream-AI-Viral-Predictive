@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from "react";
+import { motion } from "motion/react";
 import { ViralityAnalysis, PlatformScores } from "../types";
 import {
   ResponsiveContainer,
@@ -574,6 +575,15 @@ export const ViewGrowthForecast: React.FC<ViewGrowthForecastProps> = ({
           </div>
           <div className="mt-1 text-[11px] font-sans text-neutral-300">
             Passes 3s hook & completion thresholds
+          </div>
+          {/* Animated data-bar */}
+          <div className="w-full h-1.5 rounded-full bg-white/10 overflow-hidden mt-2.5">
+            <motion.div
+              className="data-bar h-full bg-emerald-400 rounded-full"
+              initial={{ width: "0%" }}
+              animate={{ width: `${Math.min(100, Math.max(0, fypPushProbability))}%` }}
+              transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+            />
           </div>
         </div>
       </div>
