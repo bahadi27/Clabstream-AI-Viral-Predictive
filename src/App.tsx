@@ -27,6 +27,7 @@ import { PromptStudio } from "./components/PromptStudio";
 import { Sidebar } from "./components/Sidebar";
 import { SmoothScrollProvider } from "./components/SmoothScroll";
 import { motion, AnimatePresence } from "motion/react";
+import { useHashRouter, RouteTab } from "./router/HashRouter";
 
 const viewContainerVariants = {
   hidden: { opacity: 0 },
@@ -81,6 +82,7 @@ const ComponentLoader = () => (
 
 export default function App() {
   const { user, signInWithGoogle } = useAuth();
+  const { location, navigate, navigateToReport } = useHashRouter();
   const [history, setHistory] = useState<ViralityAnalysis[]>(SAMPLE_ANALYSES);
   const [activeAnalysis, setActiveAnalysis] = useState<ViralityAnalysis | null>(SAMPLE_ANALYSES[0]);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -91,9 +93,12 @@ export default function App() {
   const [isCompareMode, setIsCompareMode] = useState(false);
   const [isTourOpen, setIsTourOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<
-    "overview" | "report" | "upload" | "samples" | "glossary" | "trends" | "prompt-studio"
-  >("overview");
+
+  // Active tab is synchronized with HashRouter
+  const activeTab = location.tab;
+  const setActiveTab = (tab: RouteTab) => {
+    navigate(tab, { reportId: tab === "report" ? activeAnalysis?.id : undefined });
+  };
 
   const handleSendPromptToStressTest = (scriptText: string, title: string) => {
     if (activeAnalysis) {
@@ -155,24 +160,29 @@ export default function App() {
     }
   }, [user]);
 
-  // Check for shared report ID in URL search params on mount (Open Domain Support)
+  // Check for shared report ID in HashRouter location or URL search params (Open Domain Support)
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const reportId = params.get("report") || params.get("id");
+    const searchReportId = params.get("report") || params.get("id");
+    const targetReportId = location.reportId || searchReportId;
 
-    if (reportId) {
+    if (targetReportId) {
       // 1. Check local history or sample analyses
-      const localSample = SAMPLE_ANALYSES.find((a) => a.id === reportId);
+      const localSample = SAMPLE_ANALYSES.find((a) => a.id === targetReportId);
       if (localSample) {
         setActiveAnalysis(sanitizeAnalysisData(localSample));
-        setActiveTab("report");
+        if (location.tab !== "report") {
+          navigate("report", { reportId: targetReportId, replace: true });
+        }
         return;
       }
 
-      const localHistory = history.find((a) => a.id === reportId);
+      const localHistory = history.find((a) => a.id === targetReportId);
       if (localHistory) {
         setActiveAnalysis(sanitizeAnalysisData(localHistory));
-        setActiveTab("report");
+        if (location.tab !== "report") {
+          navigate("report", { reportId: targetReportId, replace: true });
+        }
         return;
       }
 
@@ -180,7 +190,7 @@ export default function App() {
       setSharedReportStatusText("Retrieving shared viral intelligence report...");
 
       // 2. Fetch from server endpoint or Firestore
-      fetch(`/api/reports/${encodeURIComponent(reportId)}`)
+      fetch(`/api/reports/${encodeURIComponent(targetReportId)}`)
         .then((res) => {
           if (!res.ok) throw new Error("Server report not found");
           return res.json();
@@ -190,7 +200,7 @@ export default function App() {
             const sanitized = sanitizeAnalysisData(data.analysis);
             setHistory((prev) => [sanitized, ...prev.filter((i) => i.id !== sanitized.id)]);
             setActiveAnalysis(sanitized);
-            setActiveTab("report");
+            navigate("report", { reportId: targetReportId, replace: true });
             setIsLoadingSharedReport(false);
           } else {
             throw new Error("Invalid report response");
@@ -199,33 +209,36 @@ export default function App() {
         .catch(() => {
           // Fallback to open-domain Firestore collection
           setSharedReportStatusText("Searching cloud report repository...");
-          fetchSharedAnalysisFromFirestore(reportId).then((shared) => {
+          fetchSharedAnalysisFromFirestore(targetReportId).then((shared) => {
             if (shared) {
               const sanitized = sanitizeAnalysisData(shared);
               setHistory((prev) => [sanitized, ...prev.filter((i) => i.id !== sanitized.id)]);
               setActiveAnalysis(sanitized);
-              setActiveTab("report");
+              navigate("report", { reportId: targetReportId, replace: true });
               setIsLoadingSharedReport(false);
             } else {
               setSharedReportStatusText("Shared report was not found. Loaded latest sample dataset.");
               setTimeout(() => {
                 setActiveAnalysis(SAMPLE_ANALYSES[0]);
-                setActiveTab("report");
+                navigate("report", { reportId: SAMPLE_ANALYSES[0].id, replace: true });
                 setIsLoadingSharedReport(false);
               }, 1200);
             }
           }).catch(() => {
             setActiveAnalysis(SAMPLE_ANALYSES[0]);
-            setActiveTab("report");
+            navigate("report", { reportId: SAMPLE_ANALYSES[0].id, replace: true });
             setIsLoadingSharedReport(false);
           });
         });
     }
-  }, []);
+  }, [location.reportId]);
 
-  // Sync current URL search params with active report
+  // Sync current URL search params and hash with active report
   useEffect(() => {
     if (activeTab === "report" && activeAnalysis?.id) {
+      if (location.reportId !== activeAnalysis.id) {
+        navigate("report", { reportId: activeAnalysis.id, replace: true });
+      }
       const currentUrl = new URL(window.location.href);
       if (currentUrl.searchParams.get("report") !== activeAnalysis.id) {
         currentUrl.searchParams.set("report", activeAnalysis.id);
@@ -245,7 +258,7 @@ export default function App() {
         window.history.replaceState(null, "", currentUrl.toString());
       }
     }
-  }, [activeTab, activeAnalysis?.id]);
+  }, [activeTab, activeAnalysis?.id, location.reportId, navigate]);
 
   // Handle Video Upload & Analysis Call
   const handleStartAnalysis = async (payload: {

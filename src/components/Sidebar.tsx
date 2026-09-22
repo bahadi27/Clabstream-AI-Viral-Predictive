@@ -10,6 +10,7 @@ import {
   Crown,
   TrendingUp,
   X,
+  BookOpen,
 } from "lucide-react";
 
 interface SidebarProps {
@@ -159,6 +160,19 @@ export const Sidebar: React.FC<SidebarProps> = ({
             >
               <Film className="w-4 h-4 text-indigo-400 shrink-0" />
               <span>Preset Vault</span>
+            </button>
+
+            <button
+              onClick={() => onSelectTab("glossary")}
+              className={`w-full flex items-center gap-2.5 px-3 py-2 text-xs font-mono rounded-xs transition-colors ${
+                activeTab === "glossary"
+                  ? "bg-[#00F5D4]/10 text-[#00F5D4] border border-[#00F5D4]/30 font-bold"
+                  : "text-neutral-300 hover:text-white hover:bg-white/5"
+              }`}
+              title="Methodology & Codex"
+            >
+              <BookOpen className="w-4 h-4 text-teal-400 shrink-0" />
+              <span>Methodology & SLA</span>
             </button>
           </div>
 
